@@ -21,14 +21,18 @@ int deQueue()
         cout << "Queue Underflow!";
         return -1;
     }
-    int data = front->info;
+    int data = front->info; 
+    if(front == rear){
+        queueNode * dltNode = front;
+        front = NULL;
+        rear = NULL;
+        free(dltNode);
+        return data;
+    }
     queueNode * dltNode = front;
     front = front->next;
+    rear->next= front;
     free(dltNode);
-
-    if(front == NULL){
-        rear = NULL;
-    }
 
     return data;
 }
@@ -36,17 +40,17 @@ int deQueue()
 void enQueue(int element)
 {
     queueNode * newNode = (queueNode*) malloc(sizeof(queueNode));
-    // if(newNode == NULL){
-    //     cout << "queue overflow!"<<endl;
-    //     return;
-    // }
     newNode->info = element;
     newNode->next = NULL;
     if(checkUnderflow()){
-        front = rear =  newNode;
+        front = newNode;
+        rear = newNode;
+        rear->next = front;
+        return;
     }
     rear->next = newNode;
     rear = newNode;
+    rear->next = front;
     return;
 }
 
@@ -57,19 +61,11 @@ void printQueue(){
     }
     queueNode * i = front;
     cout << "Queue is : ";
-    while(i){
+    do{
         cout << i->info<<" ";
         i = i->next;
-    }
+    }while(i != front);
     return;
-}
-
-int peekQueue(){
-    if(checkUnderflow()){
-        cout << "Queue is empty!"<<endl;
-        return -1;
-    }
-    return front->info;
 }
 
 int main()
@@ -78,7 +74,7 @@ int main()
     int value = 0;
     do{
         cout << "\n\n1. Enqueue \n2. Dequeue\n";
-        cout << "3. Check status of queue \n4. Display queue\n5. Exit\n\n";
+        cout << "3. Display queue\n4. Exit\n\n";
 
         cout << "Enter your option :";
         cin >> opt;
@@ -89,6 +85,7 @@ int main()
             cout << "Enter element to enqueue : ";
             cin >> value;
             enQueue(value);
+            printQueue();
             break;
         case 2:
             value = deQueue();
@@ -100,18 +97,14 @@ int main()
             printQueue();
             break;
         case 3:
-            if(checkUnderflow()){cout << "Queue is empty!";}
-            //if(checkOverflow()){cout << "Queue is overflow!";}
-            break;
-        case 4:
             printQueue();
             break;
-        case 5:
+        case 4:
             break;
         default:
             cout << "Invalid option. Try again!"<<endl;
             break;
         }
-    }while (opt != 5);
+    }while (opt != 4);
     return 0;
 }
