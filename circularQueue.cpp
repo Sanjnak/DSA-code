@@ -63,13 +63,6 @@ void printQueue(){
     return;
 }
 
-int peekQueue(){
-    if(checkUnderflow()){
-        cout << "Queue is empty!"<<endl;
-        return -1;
-    }
-    return cirQueue_arr[front];
-}
 
 int main()
 {
@@ -77,7 +70,7 @@ int main()
     int value = 0;
     do{
         cout << "\n\n1. Enqueue \n2. Dequeue\n";
-        cout << "3. Check status of queue \n4. Display queue\n5. Exit\n\n";
+        cout << "3. Display queue\n5. Exit\n\n";
 
         cout << "Enter your option :";
         cin >> opt;
@@ -88,6 +81,7 @@ int main()
             cout << "Enter element to enqueue : ";
             cin >> value;
             enQueue(value);
+            printQueue();
             break;
         case 2:
             value = deQueue();
@@ -99,18 +93,14 @@ int main()
             printQueue();
             break;
         case 3:
-            if(checkUnderflow()){cout << "Queue is empty!";}
-            if(checkOverflow()){cout << "Queue is overflow!";}
-            break;
-        case 4:
             printQueue();
             break;
-        case 5:
+        case 4:
             break;
         default:
             cout << "Invalid option. Try again!"<<endl;
             break;
         }
-    }while (opt != 5);
+    }while (opt != 4);
     return 0;
 }
