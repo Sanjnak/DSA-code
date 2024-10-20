@@ -31,10 +31,6 @@ int popStack()
 void pushStack(int element)
 {
     stackNode * newNode = (stackNode*) malloc(sizeof(stackNode));
-    if(newNode == NULL){
-        cout << "Stack overflow!"<<endl;
-        return;
-    }
     newNode->info = element;
     newNode->next = NULL;
     if(tos != NULL){
@@ -64,7 +60,7 @@ int main()
     int value = 0;
     do{
         cout << "\n\n1. Push in the stack \n2. Pop from the stack\n";
-        cout << "3. Display the stack\n4. Print Top element of stack \n5. Exit\n\n";
+        cout << "3. Display the stack\n4. Exit\n\n";
 
         cout << "Enter your option :";
         cin >> opt;
@@ -89,19 +85,12 @@ int main()
         case 3:
             printStack();
             break;
-        case 4:
-            if(checkUnderflow()){
-                cout << "Stack is empty!";
-                break;
-            }
-            cout<< "Top of the stack is "<< tos->info <<endl;
-            break;
-        case 5 :
+        case 4 :
             break;
         default:
             cout << "Invalid option. Try again!"<<endl;
             break;
         }
-    }while (opt != 5);
+    }while (opt != 4);
     return 0;
 }
